@@ -1,3 +1,4 @@
+# arima.py
 import numpy as np
 import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA  # Updated to current ARIMA class
@@ -31,7 +32,7 @@ def evaluate_arima_model(X, arima_order):
     for t in range(len(test)):
         try:
             model = ARIMA(history, order=arima_order)
-            model_fit = model.fit(disp=0)  # Suppress output
+            model_fit = model.fit()  # Removed disp=0
             yhat = model_fit.forecast()[0]
             predictions.append(yhat)
             history.append(test[t])
@@ -72,7 +73,7 @@ def arima_model(data, order=None, train_size=0.66):
     predictions = list()
     for t in range(len(test)):
         model = ARIMA(history, order=order)
-        model_fit = model.fit(disp=0)
+        model_fit = model.fit()  # Removed disp=0
         yhat = model_fit.forecast()[0]
         predictions.append(yhat)
         history.append(test[t])
@@ -80,12 +81,3 @@ def arima_model(data, order=None, train_size=0.66):
     mae = mean_absolute_error(test, predictions)
     mse = mean_squared_error(test, predictions)
     return r2, mae, mse, order, predictions
-
-# # Example usage (replace with your data)
-# if __name__ == "__main__":
-#     # Sample data (replace with pd.read_csv or your series)
-#     np.random.seed(42)
-#     data = np.cumsum(np.random.randn(100)) + 100  # Synthetic trending series
-#     r2, mae, mse, order, preds = arima_model(data)
-#     print(f"Best Order: {order}")
-#     print(f"R2: {r2}, MAE: {mae}, MSE: {mse}")

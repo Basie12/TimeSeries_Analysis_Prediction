@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from config import DATA_FILEPATH, DATE_COL_NAME  
+from .config import DATA_FILEPATH, DATE_COL_NAME
 
 def read_data(filepath, date_col_name):
     try:
@@ -27,7 +27,7 @@ def read_data(filepath, date_col_name):
         raise RuntimeError(f"An unexpected error occurred: {e}")
 
 def aggregate_to_weekly(df_daily):
-    df_weekly = df_daily.groupby(['sku', pd.Grouper(key='date', freq='W')]).agg({
+    df_weekly = df_daily.groupby(['sku', pd.Grouper(level='date', freq='W')]).agg({
         'units_sold': 'mean',  # Target: avg_weekly_sales
         'price_unit': 'mean',
         'promotion_flag': 'mean',
@@ -48,13 +48,13 @@ def aggregate_to_weekly(df_daily):
     return df_weekly
 
 def compute_hierarchy_averages(df_daily):
-    category_avg = df_daily.groupby(['category', pd.Grouper(key='date', freq='W')])['units_sold'].mean().reset_index()
+    category_avg = df_daily.groupby(['category', pd.Grouper(level='date', freq='W')])['units_sold'].mean().reset_index()
     category_avg.rename(columns={'units_sold': 'category_avg_sales'}, inplace=True)
     
-    segment_avg = df_daily.groupby(['segment', pd.Grouper(key='date', freq='W')])['units_sold'].mean().reset_index()
+    segment_avg = df_daily.groupby(['segment', pd.Grouper(level='date', freq='W')])['units_sold'].mean().reset_index()
     segment_avg.rename(columns={'units_sold': 'segment_avg_sales'}, inplace=True)
     
-    brand_avg = df_daily.groupby(['brand', pd.Grouper(key='date', freq='W')])['units_sold'].mean().reset_index()
+    brand_avg = df_daily.groupby(['brand', pd.Grouper(level='date', freq='W')])['units_sold'].mean().reset_index()
     brand_avg.rename(columns={'units_sold': 'brand_avg_sales'}, inplace=True)
     
     return category_avg, segment_avg, brand_avg
