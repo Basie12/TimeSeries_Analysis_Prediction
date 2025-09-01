@@ -53,3 +53,15 @@ Thumbs.db
 *.mypy_cache/
 *.pytest_cache/
 __pycache__/
+
+
+# macOS files
+.DS_Store
+**/.DS_Store
+
+# Python caches
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
