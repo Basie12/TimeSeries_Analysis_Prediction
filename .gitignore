@@ -38,6 +38,8 @@ dist/
 *.sqlite
 *.pkl
 
+.DS_Store
+**/.DS_Store
 
 # System files
 .DS_Store
