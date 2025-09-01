@@ -1,8 +1,8 @@
 # Execution Instructions
 
-# Python version 3.8
+# Python version 3.10
 
-To create a virtual environment and install requirements in Python 3.8 on different operating systems, follow the instructions below:
+To create a virtual environment and install requirements in Python 3.10 on different operating systems, follow the instructions below:
 
 ### For Windows:
 
@@ -34,7 +34,7 @@ cd /path/to/project
 
 Create a new virtual environment using the venv module:
 
-python3.8 -m venv myenv
+python3.10 -m venv myenv
 
 
 Activate the virtual environment:
@@ -58,7 +58,7 @@ cd C:\path\to\project
 
 Create a new virtual environment using the Python Launcher:
 
-py -3.8 -m venv myenv
+py -3.10 -m venv myenv
 
 Note: Replace myenv with your desired virtual environment name.
 
@@ -83,7 +83,7 @@ cd /path/to/project
 Create a new virtual environment using the Python Launcher:
 
 
-python3.8 -m venv myenv
+python3.10 -m venv myenv
 
 
 Note: Replace myenv with your desired virtual environment name.
