@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA  # Updated to current ARIMA class
 from statsmodels.tsa.stattools import adfuller
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -78,6 +78,6 @@ def arima_model(data, order=None, train_size=0.66):
         predictions.append(yhat)
         history.append(test[t])
     r2 = r2_score(test, predictions)
-    mae = mean_absolute_error(test, predictions)
-    mse = mean_squared_error(test, predictions)
-    return r2, mae, mse, order, predictions
+    rmse = np.sqrt(mean_squared_error(test, predictions))
+    mape = mean_absolute_percentage_error(test, predictions) * 100  # As percentage
+    return r2, rmse, mape, order, predictions, test

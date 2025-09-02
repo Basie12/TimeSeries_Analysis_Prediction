@@ -31,9 +31,9 @@ def run_pipeline(input_filepath=DATA_FILEPATH, date_col_name=DATE_COL_NAME, proc
     # Train and evaluate each model
     results = {}
     for model_name in model_dict.keys():
-        r2, mae, mse = regression(X_train, X_test, y_train, y_test, model_name)
-        results[model_name] = {'R2': r2, 'MAE': mae, 'MSE': mse}
-        print(f"{model_name} - R2: {r2:.4f}, MAE: {mae:.4f}, MSE: {mse:.4f}")
+        r2, rmse, mape = regression(X_train, X_test, y_train, y_test, model_name)
+        results[model_name] = {'R2': r2, 'RMSE': rmse, 'MAPE': mape}
+        print(f"{model_name} - R2: {r2:.4f}, RMSE: {rmse:.4f}, MAPE: {mape:.4f}%")
     
     # For ARIMA on global weekly mean
     df_daily = pd.read_csv(input_filepath)
@@ -66,32 +66,79 @@ def run_pipeline(input_filepath=DATA_FILEPATH, date_col_name=DATE_COL_NAME, proc
     
     best_order = (1, 0, 0)
     
-    arima_r2, arima_mae, arima_mse, _, _ = arima_model(df_global['avg_weekly_sales'].values, order=best_order)
-    results['arima'] = {'R2': arima_r2, 'MAE': arima_mae, 'MSE': arima_mse}
-    print(f"ARIMA - R2: {arima_r2:.4f}, MAE: {arima_mae:.4f}, MSE: {arima_mse:.4f}")
+    arima_r2, arima_rmse, arima_mape, order, predictions, test = arima_model(df_global['avg_weekly_sales'].values, order=best_order)
+    results['arima'] = {'R2': arima_r2, 'RMSE': arima_rmse, 'MAPE': arima_mape}
+    print(f"ARIMA - R2: {arima_r2:.4f}, RMSE: {arima_rmse:.4f}, MAPE: {arima_mape:.4f}%")
+    
+    # Plot ARIMA predictions vs actual
+    plt.figure(figsize=(10, 6))
+    plt.plot(test, label='Actual')
+    plt.plot(predictions, label='Predicted')
+    plt.title('ARIMA Predictions vs Actual')
+    plt.xlabel('Time Steps')
+    plt.ylabel('Avg Weekly Sales')
+    plt.legend()
+    plt.savefig('artifacts/arima_predictions.png')
+    plt.show()
     
     # For LSTM on the same global weekly mean 
-    lstm_r2, lstm_mae, lstm_mse = lstm_model(df_global['avg_weekly_sales'].values)
-    results['lstm'] = {'R2': lstm_r2, 'MAE': lstm_mae, 'MSE': lstm_mse}
-    print(f"LSTM - R2: {lstm_r2:.4f}, MAE: {lstm_mae:.4f}, MSE: {lstm_mse:.4f}")
-
-    # Compare MSE to find best model
-    mse_dict = {model: metrics['MSE'] for model, metrics in results.items()}
-    best_model = min(mse_dict, key=mse_dict.get)
-    print('Best model is {} having MSE of {}'.format(best_model, min(mse_dict.values())))
-
-    # Add bar plot for MSE metrics
-    models = list(mse_dict.keys())
-    mse_values = list(mse_dict.values())
-
+    lstm_r2, lstm_rmse, lstm_mape, y_test_lstm, y_pred_lstm = lstm_model(df_global['avg_weekly_sales'].values)
+    results['lstm'] = {'R2': lstm_r2, 'RMSE': lstm_rmse, 'MAPE': lstm_mape}
+    print(f"LSTM - R2: {lstm_r2:.4f}, RMSE: {lstm_rmse:.4f}, MAPE: {lstm_mape:.4f}%")
+    
+    # Plot LSTM predictions vs actual
     plt.figure(figsize=(10, 6))
-    plt.bar(models, mse_values, color='skyblue')
+    plt.plot(y_test_lstm, label='Actual')
+    plt.plot(y_pred_lstm, label='Predicted')
+    plt.title('LSTM Predictions vs Actual')
+    plt.xlabel('Time Steps')
+    plt.ylabel('Avg Weekly Sales')
+    plt.legend()
+    plt.savefig('artifacts/lstm_predictions.png')
+    plt.show()
+
+    # Compare MAPE to find best model (or use RMSE as before)
+    mape_dict = {model: metrics['MAPE'] for model, metrics in results.items()}
+    best_model = min(mape_dict, key=mape_dict.get)
+    print('Best model is {} having MAPE of {}%'.format(best_model, min(mape_dict.values())))
+
+    # Add bar plots for R2, RMSE, MAPE
+    models = list(results.keys())
+    
+    # R2 Bar Plot
+    r2_values = [metrics['R2'] for metrics in results.values()]
+    plt.figure(figsize=(10, 6))
+    plt.bar(models, r2_values, color='green')
     plt.xlabel('Models')
-    plt.ylabel('MSE')
-    plt.title('Model Comparison based on MSE')
+    plt.ylabel('R2 Score')
+    plt.title('Model Comparison based on R2 Score')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig('artifacts/model_mse_comparison.png')
+    plt.savefig('artifacts/model_r2_comparison.png')
+    plt.show()
+    
+    # RMSE Bar Plot
+    rmse_values = [metrics['RMSE'] for metrics in results.values()]
+    plt.figure(figsize=(10, 6))
+    plt.bar(models, rmse_values, color='orange')
+    plt.xlabel('Models')
+    plt.ylabel('RMSE')
+    plt.title('Model Comparison based on RMSE')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('artifacts/model_rmse_comparison.png')
+    plt.show()
+    
+    # MAPE Bar Plot
+    mape_values = [metrics['MAPE'] for metrics in results.values()]
+    plt.figure(figsize=(10, 6))
+    plt.bar(models, mape_values, color='blue')
+    plt.xlabel('Models')
+    plt.ylabel('MAPE (%)')
+    plt.title('Model Comparison based on MAPE')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('artifacts/model_mape_comparison.png')
     plt.show()
     
     return results

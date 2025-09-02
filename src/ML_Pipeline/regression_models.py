@@ -1,7 +1,7 @@
-# models.py
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
@@ -29,9 +29,9 @@ def regression(X_train, X_test, y_train, y_test, model_name, model_path=None):
     print(f'model saved in {model_path}')
     y_pred = model.predict(X_test)
     r2 = r2_score(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    mse = mean_squared_error(y_test, y_pred)
-    return r2, mae, mse
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    mape = mean_absolute_percentage_error(y_test, y_pred) * 100  # As percentage
+    return r2, rmse, mape
 
 if __name__ == "__main__":
     # Load processed data
@@ -46,5 +46,5 @@ if __name__ == "__main__":
     
     # Train and evaluate each model
     for model_name in model_dict.keys():
-        r2, mae, mse = regression(X_train, X_test, y_train, y_test, model_name)
-        print(f"{model_name} - R2: {r2:.4f}, MAE: {mae:.4f}, MSE: {mse:.4f}")
+        r2, rmse, mape = regression(X_train, X_test, y_train, y_test, model_name)
+        print(f"{model_name} - R2: {r2:.4f}, RMSE: {rmse:.4f}, MAPE: {mape:.4f}%")

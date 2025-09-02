@@ -1,6 +1,6 @@
 # lstm.py
 import numpy as np
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_percentage_error
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.optimizers import Adam
@@ -30,13 +30,13 @@ def lstm_model(time_series_data, n_steps=4, epochs=50, batch_size=32, train_size
     
     y_pred = model.predict(X_test, verbose=0).flatten()
     r2 = r2_score(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    mape = mean_absolute_percentage_error(y_test, y_pred) * 100 
     
     # Save model
     if model_path is None:
-        model_path = 'output/modls/lstm_model.h5'  
+        model_path = 'output/models/lstm_model.h5' 
     model.save(model_path)
     print(f'model saved in {model_path}')
     
-    return r2, mae, mse
+    return r2, rmse, mape, y_test, y_pred
