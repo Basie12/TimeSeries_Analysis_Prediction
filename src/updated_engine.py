@@ -13,6 +13,9 @@ from src.ML_Pipeline.regression_models import regression, model_dict
 # Import from arima.py
 from src.ML_Pipeline.arima import arima_model, tune_arima_order
 
+# Import from lstm.py (new)
+from src.ML_Pipeline.lstm import lstm_model
+
 def run_pipeline(input_filepath=DATA_FILEPATH, date_col_name=DATE_COL_NAME, processed_filepath=PROCESSED_DATA_FILEPATH):
     # Run feature engineering (returns df_final; also saves to processed_filepath if needed)
     df = feature_engineering(input_filepath, date_col_name, processed_filepath)
@@ -66,6 +69,11 @@ def run_pipeline(input_filepath=DATA_FILEPATH, date_col_name=DATE_COL_NAME, proc
     results['arima'] = {'R2': arima_r2, 'MAE': arima_mae, 'MSE': arima_mse}
     print(f"ARIMA - R2: {arima_r2:.4f}, MAE: {arima_mae:.4f}, MSE: {arima_mse:.4f}")
     
+    # For LSTM on the same global weekly mean 
+    lstm_r2, lstm_mae, lstm_mse = lstm_model(df_global['avg_weekly_sales'].values)
+    results['lstm'] = {'R2': lstm_r2, 'MAE': lstm_mae, 'MSE': lstm_mse}
+    print(f"LSTM - R2: {lstm_r2:.4f}, MAE: {lstm_mae:.4f}, MSE: {lstm_mse:.4f}")
+
     # Compare MSE to find best model
     mse_dict = {model: metrics['MSE'] for model, metrics in results.items()}
     best_model = min(mse_dict, key=mse_dict.get)
