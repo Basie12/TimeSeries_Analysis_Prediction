@@ -1,6 +1,7 @@
 # engine.py
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from src.ML_Pipeline.config import DATA_FILEPATH, DATE_COL_NAME, PROCESSED_DATA_FILEPATH, MODEL_BASE_PATH
 
@@ -78,6 +79,20 @@ def run_pipeline(input_filepath=DATA_FILEPATH, date_col_name=DATE_COL_NAME, proc
     mse_dict = {model: metrics['MSE'] for model, metrics in results.items()}
     best_model = min(mse_dict, key=mse_dict.get)
     print('Best model is {} having MSE of {}'.format(best_model, min(mse_dict.values())))
+
+    # Add bar plot for MSE metrics
+    models = list(mse_dict.keys())
+    mse_values = list(mse_dict.values())
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(models, mse_values, color='skyblue')
+    plt.xlabel('Models')
+    plt.ylabel('MSE')
+    plt.title('Model Comparison based on MSE')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('artifacts/model_mse_comparison.png')
+    plt.show()
     
     return results
 
