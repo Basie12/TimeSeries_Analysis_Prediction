@@ -139,9 +139,9 @@ Below is the correlation matrix of numeric features:
 3. **Model Performance Comparison**: Bar chart of MSE/R2 across models (generate via matplotlib.bar in engine.py or a separate script).
 
 ![Correlation Matrix](artifacts/model_rmse_comparison.png)
-### MSE Comparison
+### RMSE Comparison
 * ARIMA has the lowest MSE (~0.5), then LSTM (~1.0), while regressions range ~4.0–4.5, underscoring ARIMA's strength in minimizing absolute errors for demand prediction.
-![Correlation Matrix](artifacts/lstm_predictions.png)
+![MAPE Value](artifacts/model_mape_comparison.png)
 
 ### ## MAPE Comparison
 * ARIMA excels with ~2.5% MAPE, far below others (~7–8.5%), highlighting its superiority for relative sales forecasting accuracy.
@@ -154,6 +154,8 @@ Below is the correlation matrix of numeric features:
 
 ![Correlation Matrix](images/arima_predicted_actual.png)
 ![Correlation Matrix](images/sarima_predition.png)
+### ARIMA VS LSTM Prediction Values
+![Correlation Matrix](artifacts/lstm_predictions.png)
 
 5. **Feature Importance**: For XGBoost/RF, plot top features (using model.feature_importances_).
 ![Correlation Matrix](images/xgboostfeatureimportance.png)
