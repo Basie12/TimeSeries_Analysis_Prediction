@@ -116,17 +116,39 @@ Yes, including visuals in your README or project would enhance it, especially fo
 Below is the correlation matrix of numeric features:
 
 ![Correlation Matrix](images/heatmap.png)
+
+### Correlation Heatmap of Numeric Features
+- **Strong Positive Correlations with Target**: `avg_weekly_sales` shows high positive correlations (0.77–0.94) with historical sales metrics like `category_avg_sales`, `segment_avg_sales`, `brand_avg_sales`, `lag-1`, `lag-4`, and `rolling_mean-4`, indicating past trends are key predictors.
+- **Negative Price Impact**: A moderate negative correlation (-0.19) exists between `avg_weekly_sales` and `price_unit`, suggesting higher prices tend to reduce sales volume.
+- **Inter-Feature Relationships**: Aggregated sales features (e.g., category, segment, brand) are highly correlated with each other (0.92–0.94), while `stock_available` and `delivered_qty` have a notable negative link (-0.29), highlighting potential supply chain dynamics.
+
+
+
 2. **Sales Trends Plot**: Plot weekly sales over time (e.g., using matplotlib or seaborn in a notebook). This visualizes seasonality or trends in the data.
 ![Correlation Matrix](images/yearweekssales_boxplot.png)
+### Box Plot of Average Weekly Sales by Region and Year (Poland)
+- **Upward Trend Across Years**: Median sales increased steadily from ~20 units in 2022 to 22–25 units in 2024 for all regions, with the strongest growth in South (green) and North (orange) regions.
+- **Regional Variations**: Central (blue) had the most outliers (high-sales spikes) in 2022–2023, East (purple) showed the lowest and most stable medians, while interquartile ranges indicate moderate variability overall.
+- **Outlier Insights**: Sporadic high performers (circles) are more common in Central and North, pointing to occasional demand surges, but no extreme lows across regions.
 
 ![Correlation Matrix](images/newplotcatgory.png)
-
+* So, on average Yogurt and ReadMeal  are more sales than other categor.
 ![Correlation Matrix](images/newplotregion.png)
+* Overall PL-Central region has more sales
 
 3. **Model Performance Comparison**: Bar chart of MSE/R2 across models (generate via matplotlib.bar in engine.py or a separate script).
 
 ![Correlation Matrix](artifacts/model_rmse_comparison.png)
+### MSE Comparison
+* ARIMA has the lowest MSE (~0.5), then LSTM (~1.0), while regressions range ~4.0–4.5, underscoring ARIMA's strength in minimizing absolute errors for demand prediction.
+![Correlation Matrix](artifacts/lstm_predictions.png)
+
+### ## MAPE Comparison
+* ARIMA excels with ~2.5% MAPE, far below others (~7–8.5%), highlighting its superiority for relative sales forecasting accuracy.
+
 ![Correlation Matrix](artifacts/model_r2_comparison.png)
+### R² Score Comparison
+* All models show strong R² scores (0.78–0.90), with ARIMA and LSTM leading at ~0.90, followed by XGBoost (~0.82), indicating time-series models best capture sales variance.
 
 4. **Forecast vs Actual Plot**: For ARIMA/LSTM, plot predictions vs test data to show forecasting accuracy.
 
@@ -134,7 +156,11 @@ Below is the correlation matrix of numeric features:
 ![Correlation Matrix](images/sarima_predition.png)
 
 5. **Feature Importance**: For XGBoost/RF, plot top features (using model.feature_importances_).
-
+![Correlation Matrix](images/xgboostfeatureimportance.png)
+### Feature Importance
+- **Dominant Historical Sales Features**: Category and segment-level average sales (e.g., `category_segment_avg_sales3` at ~0.30) lead in importance, followed by brand-segment lags (~0.10–0.15), emphasizing aggregated past performance as key predictors over individual granular details.
+- **Secondary Influences**: Promotion, season, and channel features show moderate importance (~0.02–0.05), while specific product attributes like pack_type and delivery_days contribute minimally, suggesting broader trends outweigh operational variables.
+- **Low Granularity Impact**: Numerous brand-specific features (e.g., Milk, Yogurt variants) hover near 0.00–0.01, indicating XGBoost prioritizes high-level groupings for efficient sales forecasting.
 
 To include:
 - Run code to generate images (e.g., save with plt.savefig('visuals/corr_heatmap.png')).
