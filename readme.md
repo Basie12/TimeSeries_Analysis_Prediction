@@ -63,9 +63,6 @@ Note: Ensure Python 3.10 is installed and in your PATH. For TensorFlow on Mac (I
 - Edit `src/ML_Pipeline/config.py` for file paths (e.g., `DATA_FILEPATH`, `PROCESSED_DATA_FILEPATH`).
 - For custom runs, modify `engine.py` (e.g., uncomment ARIMA tuning, adjust LSTM hyperparameters like `n_steps` or epochs).
 
-### Example Output
-The script will print model performances and the best model, e.g.:
-
 ## Project Structure
 
 ```text
@@ -143,7 +140,7 @@ Below is the correlation matrix of numeric features:
 * ARIMA has the lowest MSE (~0.5), then LSTM (~1.0), while regressions range ~4.0–4.5, underscoring ARIMA's strength in minimizing absolute errors for demand prediction.
 ![MAPE Value](artifacts/model_mape_comparison.png)
 
-### ## MAPE Comparison
+### MAPE Comparison
 * ARIMA excels with ~2.5% MAPE, far below others (~7–8.5%), highlighting its superiority for relative sales forecasting accuracy.
 
 ![Correlation Matrix](artifacts/model_r2_comparison.png)
