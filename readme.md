@@ -96,7 +96,17 @@ Models are evaluated on a test split, with ARIMA and LSTM applied to global week
 Yes, including visuals in your README or project would enhance it, especially for a time series analysis project. Here's what I suggest:
 
 1. **Correlation Heatmap**: From feature engineering (already in code via seaborn.heatmap). Add a screenshot showing feature correlations to highlight multicollinearity removal.
+
+Below is the correlation matrix of numeric features:
+
+![Correlation Matrix](images/heatmap.png)
 2. **Sales Trends Plot**: Plot weekly sales over time (e.g., using matplotlib or seaborn in a notebook). This visualizes seasonality or trends in the data.
+![Correlation Matrix](images/yearweekssales_boxplot.png)
+
+![Correlation Matrix](images/newplotcatgory.png)
+
+![Correlation Matrix](images/newplotregion.png)
+
 3. **Model Performance Comparison**: Bar chart of MSE/R2 across models (generate via matplotlib.bar in engine.py or a separate script).
 4. **Forecast vs Actual Plot**: For ARIMA/LSTM, plot predictions vs test data to show forecasting accuracy.
 5. **Feature Importance**: For XGBoost/RF, plot top features (using model.feature_importances_).
