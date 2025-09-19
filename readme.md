@@ -127,11 +127,13 @@ Below is the correlation matrix of numeric features:
 - **Upward Trend Across Years**: Median sales increased steadily from ~20 units in 2022 to 22–25 units in 2024 for all regions, with the strongest growth in South (green) and North (orange) regions.
 - **Regional Variations**: Central (blue) had the most outliers (high-sales spikes) in 2022–2023, East (purple) showed the lowest and most stable medians, while interquartile ranges indicate moderate variability overall.
 - **Outlier Insights**: Sporadic high performers (circles) are more common in Central and North, pointing to occasional demand surges, but no extreme lows across regions.
+## Distribution Per Category and Types
+![Correlation Matrix](images/newplot_category.png)
 
-![Correlation Matrix](images/princepercategory_hist.pngg)
 * So, on average Yogurt and ReadMeal  are more sales than other categor.
 
-![Correlation Matrix](images/pricepertype_hist.png)
+![Correlation Matrix](images/newplot_region.png)
+
 * Overall PL-Central region has more sales
 
 3. **Model Performance Comparison**: Bar chart of MSE/R2 across models (generate via matplotlib.bar in engine.py or a separate script).
