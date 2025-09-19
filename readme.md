@@ -66,24 +66,25 @@ Note: Ensure Python 3.10 is installed and in your PATH. For TensorFlow on Mac (I
 ### Example Output
 The script will print model performances and the best model, e.g.:
 
-
-
 ## Project Structure
+
+```text
 TimeSeries_Analysis_Prediction/
-├── src/ # Source code
-│ ├── engine.py # Main pipeline runner
-│ ├── ML_Pipeline/
-│ │ ├── config.py # Configuration (paths, column names)
-│ │ ├── dataset.py # Data loading and aggregation
-│ │ ├── Featureengineering.py # Feature creation, encoding, scaling
-│ │ ├── regression_models.py # ML models (Linear, RF, XGBoost)
-│ │ ├── arima.py # ARIMA model implementation
-│ │ ├── lstm.py # LSTM model implementation
-│ │ └── ... # Other utils if added
-├── artifacts/ # Saved models, preprocessors
-├── requirements.txt # Dependencies
-├── README.md # Project documentation
-└── ... # Data files, outputs
+├── src/                        
+│   ├── engine.py               # Main pipeline runner
+│   ├── ML_Pipeline/
+│   │   ├── config.py           # Configuration (paths, column names)
+│   │   ├── dataset.py          # Data loading and aggregation
+│   │   ├── Featureengineering.py # Feature creation, encoding, scaling
+│   │   ├── regression_models.py  # ML models (Linear, RF, XGBoost)
+│   │   ├── arima.py            # ARIMA model implementation
+│   │   ├── lstm.py             # LSTM model implementation
+│   │   └── ...                 # Other utils if added
+├── artifacts/                  # Saved models, preprocessors
+├── requirements.txt            # Dependencies
+├── README.md                   # Project documentation
+└── ...                         # Data files, outputs
+
 
 ## Models Used
 - **Machine Learning**: Linear Regression, Random Forest, XGBoost (feature-based regression).
