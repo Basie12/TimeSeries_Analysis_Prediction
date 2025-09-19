@@ -108,8 +108,17 @@ Below is the correlation matrix of numeric features:
 ![Correlation Matrix](images/newplotregion.png)
 
 3. **Model Performance Comparison**: Bar chart of MSE/R2 across models (generate via matplotlib.bar in engine.py or a separate script).
+
+![Correlation Matrix](artifacts/model_rmse_comparison.png)
+![Correlation Matrix](artifacts/model_r2_comparison.png)
+
 4. **Forecast vs Actual Plot**: For ARIMA/LSTM, plot predictions vs test data to show forecasting accuracy.
+
+![Correlation Matrix](images/arima_predicted_actual.png)
+![Correlation Matrix](images/sarima_predition.png)
+
 5. **Feature Importance**: For XGBoost/RF, plot top features (using model.feature_importances_).
+
 
 To include:
 - Run code to generate images (e.g., save with plt.savefig('visuals/corr_heatmap.png')).
