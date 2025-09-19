@@ -71,19 +71,33 @@ The script will print model performances and the best model, e.g.:
 ```text
 TimeSeries_Analysis_Prediction/
 ├── src/                        
-│   ├── engine.py               # Main pipeline runner
+│   ├── engine.py                 # Main pipeline runner
 │   ├── ML_Pipeline/
-│   │   ├── config.py           # Configuration (paths, column names)
-│   │   ├── dataset.py          # Data loading and aggregation
+│   │   ├── config.py             # Configuration (paths, column names)
+│   │   ├── dataset.py            # Data loading and aggregation
 │   │   ├── Featureengineering.py # Feature creation, encoding, scaling
 │   │   ├── regression_models.py  # ML models (Linear, RF, XGBoost)
-│   │   ├── arima.py            # ARIMA model implementation
-│   │   ├── lstm.py             # LSTM model implementation
-│   │   └── ...                 # Other utils if added
-├── artifacts/                  # Saved models, preprocessors
-├── requirements.txt            # Dependencies
-├── README.md                   # Project documentation
-└── ...                         # Data files, outputs
+│   │   ├── arima.py              # ARIMA model implementation
+│   │   ├── lstm.py               # LSTM model implementation
+│   │   └── ...                   # Other utils if added
+│
+├── input/                        # Raw input data (CSV files)
+│   └── FMCG_2022_2024.csv
+│
+├── output/                       # Outputs from pipeline
+│   ├── processed/                # Processed / cleaned data
+│   │   └── processed_data.csv
+│   └── models/              # Trained models (pickle files)
+│     
+│
+├── images/                       # Plots and visualizations
+│
+├── notebooks/                    # Jupyter notebooks for experimentation
+│
+├── requirements.txt              # Dependencies
+├── README.md                     # Project documentation
+└── .gitignore                    # Ignored files (env, pycache, large data dumps)
+
 ``` 
 
 
