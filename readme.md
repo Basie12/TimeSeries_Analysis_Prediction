@@ -148,10 +148,12 @@ Below is the correlation matrix of numeric features:
 * All models show strong R² scores (0.78–0.90), with ARIMA and LSTM leading at ~0.90, followed by XGBoost (~0.82), indicating time-series models best capture sales variance.
 
 4. **Forecast vs Actual Plot**: For ARIMA/LSTM, plot predictions vs test data to show forecasting accuracy.
-
+## ARIMA VS SARIMA
 ![Correlation Matrix](images/arima_predicted_actual.png)
-![Correlation Matrix](images/sarima_predition.png)
-### ARIMA VS LSTM Prediction Values
+## SARIMA
+![Decomposition ](isarima_diagnostics.png)
+![Prediction ](images/sarima_predition.png)
+### LSTM Prediction Values
 ![Correlation Matrix](artifacts/lstm_predictions.png)
 
 5. **Feature Importance**: For XGBoost/RF, plot top features (using model.feature_importances_).
