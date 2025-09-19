@@ -166,13 +166,6 @@ Below is the correlation matrix of numeric features:
 - **Secondary Influences**: Promotion, season, and channel features show moderate importance (~0.02–0.05), while specific product attributes like pack_type and delivery_days contribute minimally, suggesting broader trends outweigh operational variables.
 - **Low Granularity Impact**: Numerous brand-specific features (e.g., Milk, Yogurt variants) hover near 0.00–0.01, indicating XGBoost prioritizes high-level groupings for efficient sales forecasting.
 
-To include:
-- Run code to generate images (e.g., save with plt.savefig('visuals/corr_heatmap.png')).
-- Add to README: `![Correlation Heatmap](visuals/corr_heatmap.png)`
-- Create a `visuals/` folder and commit the images (or generate them dynamically in a Jupyter notebook for demo).
-
-This makes the project more engaging and demonstrates results visually.
-
 ## Contributing
 Feel free to fork and submit pull requests. Ensure tests pass and follow Python PEP8 style.
 
